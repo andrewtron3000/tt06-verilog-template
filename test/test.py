@@ -9,6 +9,8 @@ from cocotbext.uart import UartSink
 @cocotb.test()
 async def test_project(dut):
   dut._log.info("Start")
+
+  uart_sink = UartSink(dut.uo_out[4], baud=115200, bits=8)
   
   # Define the clock at 50 MHz
   clock = Clock(dut.clk, 20, units="ns")
@@ -18,7 +20,6 @@ async def test_project(dut):
   dut.ena.value = 0
   dut.ui_in.value = 0x80
   dut.uio_in.value = 0
-  uart_sink = UartSink(dut.uo_out[4], baud=115200, bits=8)
 
   # Reset
   dut._log.info("Reset")
