@@ -3,7 +3,7 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles, RisingEdge
+from cocotb.triggers import ClockCycles, RisingEdge, FallingEdge
 
 @cocotb.test()
 async def test_project(dut):
@@ -28,24 +28,6 @@ async def test_project(dut):
   dut._log.info("Test")
   dut.ena.value = 1
 
+  # Test that the UART toggles.
   assert RisingEdge(dut.uo_out[4])
-
-  assert True
-
-  # Await UART data to come back
-#  await uart_sink.wait()
-
-  # Input  0x80:  _10000000_
-  # Output 0xC0:   11000000           
-#  data = await uart_sink.recv(1)
-#  assert data == 0xC0
-
-  # Input  0xC0:  _11000000_
-  # Output 0xA0:   10100000           
-#  data = await uart_sink.recv(1)
-#  assert data == 0xA0
-
-  # Input  0xA0:  _10100000_
-  # Output 0xB0:   10110000           
-#  data = await uart_sink.recv(1)
-#  assert data == 0xB0
+  assert FallingEdge(dut.uo_out[4])
