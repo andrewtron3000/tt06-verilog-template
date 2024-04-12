@@ -1,20 +1,26 @@
 <!---
 
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
+Rule 30 Engine!
 -->
 
 ## How it works
 
-Explain how your project works
+This project is designed to run the Rule 30 cellular automata with initial starting value defined on the input bus.  Each iteration is output to the UART, which is operating as an 8N1 UART at 115,200 baud.
 
 ## How to test
 
-Explain how to use your project
+The Rule 30 driver and logic are written in Bluespec.  One must install the Bluespec Compiler to be able to compile these sources into Verilog.  The generated Verilog is also  included in this repo as well in case you don't have the Bluespec compiler.
+
+The Bluespec compiler can be found here: https://github.com/B-Lang-org/bsc.
+
+To compile the Bluespec, do the following:
+```
+cd src
+make verilog
+```
+
+At this point all necessary Verilog files have been created.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+The initial condition used for the Rule 30 iteration is as defined on the input bus.  The output in uo_out[4] is used as the TX side of the UART.
