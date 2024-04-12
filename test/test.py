@@ -3,7 +3,26 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles, RisingEdge, FallingEdge
+from cocotb.triggers import ClockCycles, Timer, RisingEdge, FallingEdge
+
+# Using the read_packet function from the following project:
+# https://github.com/enieman/uart_programmable_rv32i/blob/main/LICENSE
+# https://github.com/enieman/uart_programmable_rv32i/blob/main/test/test.py
+async def read_packet(dut):
+  # Wait for start bit
+  while (dut.uo_out.value & 0x10) == 0x10:
+    await ClockCycles(dut.clk, 1)
+  # Wait out start bit, align with middle of first data bit
+  await Timer(13022, units="ns") # 115200 bit/sec, 1.5 bits
+  # Read data
+  data = 0
+  for i in range(0,8):
+    if (dut.uo_out.value & 0x10) == 0x10:
+      data = data | (1 << i)
+    await Timer(8681, units="ns") # 115200 bit/sec, 1 bit
+  # Wait out rest of data bit
+  await Timer(4341, units="ns") # 115200 bit/sec, 0.5 bit
+  return(data)
 
 @cocotb.test()
 async def test_project(dut):
@@ -27,6 +46,16 @@ async def test_project(dut):
   # Set the input values, wait clock cycle, and check the output
   dut._log.info("Test")
   dut.ena.value = 1
+
+  # Read three UART bytes in
+  data_list = [0, 0, 0]
+  for i in range(0, len(data_list)):
+    data_list[i] = await read_packet(dut)
+
+  # Do some asserts
+  assert (data_list[0] == 0xC0)
+  assert (data_list[1] == 0xA0)
+  assert (data_list[2] == 0xB0)
 
   # Test that the UART toggles.
   assert RisingEdge(dut.uo_out[4])
