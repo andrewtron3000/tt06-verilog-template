@@ -18,6 +18,9 @@ project:
     - "project.v"
     - "mkRule30Driver.v"
     - "mkRule30.v"
+    - "Counter.v"
+    - "SizedFIFO.v"
+    - "FIFO1.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
