@@ -9,6 +9,9 @@ from cocotbext.uart import UartSink
 @cocotb.test()
 async def test_project(dut):
   dut._log.info("Start")
+  dut._log.info(dir(dut))
+  dut._log.info(dir(dut.uo_out))
+  dut._log.info(dir(dut.uo_out[4]))
 
   uart_sink = UartSink(dut.uo_out[4], baud=115200, bits=8)
   
