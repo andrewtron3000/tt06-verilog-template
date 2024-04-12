@@ -3,20 +3,11 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles
-from cocotb.triggers import Timer
-from cocotbext.uart import UartSink
+from cocotb.triggers import ClockCycles, RisingEdge
 
 @cocotb.test()
 async def test_project(dut):
   dut._log.info("Start")
-  dut._log.info(str(dir(dut)))
-  dut._log.info(str(dir(dut.uo_out)))
-  dut._log.info(str(dir(dut.uo_out[4])))
-
-  uart_sink = UartSink(dut.uo_out[4], baud=115200, bits=8)
-  
-  await Timer(10, 'us')
 
   # Define the clock at 50 MHz
   clock = Clock(dut.clk, 20, units="ns")
@@ -36,6 +27,8 @@ async def test_project(dut):
   # Set the input values, wait clock cycle, and check the output
   dut._log.info("Test")
   dut.ena.value = 1
+
+  assert RisingEdge(dut.uo_out[4])
 
   assert True
 
