@@ -39,10 +39,16 @@ module tt_um_andrewtron3000 (
 
   wire startup_input_ready;
   wire startup_input_enable;
+  wire operation_mode_ready;
+  wire operation_mode_enable;
 
   // submodule rule_30_driver
   mkRule30Driver rule_30_driver(.CLK(clk),
 				.RST_N(reset_n),
+
+        .operation_mode_arg(uio_in),
+        .EN_operation_mode(operation_mode_enable),
+        .RDY_operation_mode(operation_mode_ready),
 
 				.startup_value_v(ui_in),
 				.EN_startup_value(startup_input_enable),
@@ -52,5 +58,6 @@ module tt_um_andrewtron3000 (
 				.txrx_SOUT(driver_sout));
 
   assign startup_input_enable = startup_input_ready;
+  assign operation_mode_enable = operation_mode_ready;
 
 endmodule

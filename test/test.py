@@ -32,6 +32,10 @@ async def test_project(dut):
   clock = Clock(dut.clk, 20, units="ns")
   cocotb.start_soon(clock.start())
 
+  #
+  # Test 1
+  #
+
   # Set some initial values.  Start disabled.
   dut.ena.value = 0
   dut.ui_in.value = 0x80
@@ -57,6 +61,54 @@ async def test_project(dut):
   assert (data_list[1] == 0xA0)
   assert (data_list[2] == 0xB0)
 
-  # Test that the UART toggles.
-  assert RisingEdge(dut.uo_out[4])
-  assert FallingEdge(dut.uo_out[4])
+
+  #
+  # Test 2
+  #
+
+  # Set some initial values.  Start disabled.
+  dut.ena.value = 0
+  dut.ui_in.value = 0x80
+  dut.uio_in.value = 0xa5
+
+  # Reset
+  dut._log.info("Reset")
+  dut.rst_n.value = 0
+  await ClockCycles(dut.clk, 20)
+  dut.rst_n.value = 1
+
+  # Set the input values, wait clock cycle, and check the output
+  dut._log.info("Test")
+  dut.ena.value = 1
+
+  # Read three UART bytes in
+  data_list = []
+  for i in range(0, 25):
+    data_list[i] = await read_packet(dut)
+
+  # Do some asserts
+  assert (data_list[0] == 0x4D)
+  assert (data_list[1] == 0x65)
+  assert (data_list[2] == 0x72)
+  assert (data_list[3] == 0x72)
+  assert (data_list[4] == 0x79)
+  assert (data_list[5] == 0x20)
+  assert (data_list[6] == 0x58)
+  assert (data_list[7] == 0x6D)
+  assert (data_list[8] == 0x61)
+  assert (data_list[9] == 0x73)
+  assert (data_list[10] == 0x20)
+  assert (data_list[11] == 0x27)
+  assert (data_list[12] == 0x32)
+  assert (data_list[13] == 0x34)
+  assert (data_list[14] == 0x20)
+  assert (data_list[15] == 0x53)
+  assert (data_list[16] == 0x74)
+  assert (data_list[17] == 0x72)
+  assert (data_list[18] == 0x61)
+  assert (data_list[19] == 0x74)
+  assert (data_list[20] == 0x6F)
+  assert (data_list[21] == 0x73)
+  assert (data_list[22] == 0x21)
+  assert (data_list[23] == 0x09)
+  assert (data_list[24] == 0x09)
