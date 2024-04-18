@@ -82,7 +82,7 @@ async def test_project(dut):
   dut.ena.value = 1
 
   # Read three UART bytes in
-  data_list = []
+  data_list = [0] * 25
   for i in range(0, 25):
     data_list[i] = await read_packet(dut)
 
