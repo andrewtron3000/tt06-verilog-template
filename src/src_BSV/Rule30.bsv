@@ -5,7 +5,7 @@ endinterface
 
 (* synthesize *)
 module mkRule30(Rule30_Ifc);
-   Reg#(Bit#(40)) x <- mkReg(0);
+   Reg#(Bit#(72)) x <- mkReg(0);
    Reg#(Bit#(8)) r30 <- mkReg(8'd30);
    Reg#(Bool) busy_flag <- mkReg(False);
    Reg#(Bool) step_complete <- mkReg(False);
@@ -50,19 +50,59 @@ module mkRule30(Rule30_Ifc);
       let b36 = { x[37], x[36], x[35]};
       let b37 = { x[38], x[37], x[36]};
       let b38 = { x[39], x[38], x[37]};
-      let b39 = { 1'b0,  x[39], x[38]};
-      x <= {r30[b39], r30[b38], r30[b37], r30[b36], r30[b35], r30[b34], r30[b33], r30[b32], r30[b31], r30[b30], r30[b29], r30[b28], r30[b27], r30[b26], r30[b25], r30[b24], r30[b23], r30[b22], r30[b21], r30[b20], r30[b19], r30[b18], r30[b17], r30[b16], r30[b15], r30[b14], r30[b13], r30[b12], r30[b11], r30[b10], r30[b9], r30[b8], r30[b7], r30[b6], r30[b5], r30[b4], r30[b3], r30[b2], r30[b1], r30[b0]};
+      let b39 = { x[40], x[39], x[38]};
+      let b40 = { x[41], x[40], x[39]};
+      let b41 = { x[42], x[41], x[40]};
+      let b42 = { x[43], x[42], x[41]};
+      let b43 = { x[44], x[43], x[42]};
+      let b44 = { x[45], x[44], x[43]};
+      let b45 = { x[46], x[45], x[44]};
+      let b46 = { x[47], x[46], x[45]};
+      let b47 = { x[48], x[47], x[46]};
+      let b48 = { x[49], x[48], x[47]};
+      let b49 = { x[50], x[49], x[48]};
+      let b50 = { x[51], x[50], x[49]};
+      let b51 = { x[52], x[51], x[50]};
+      let b52 = { x[53], x[52], x[51]};
+      let b53 = { x[54], x[53], x[52]};
+      let b54 = { x[55], x[54], x[53]};
+      let b55 = { x[56], x[55], x[54]};
+      let b56 = { x[57], x[56], x[55]};
+      let b57 = { x[58], x[57], x[56]};
+      let b58 = { x[59], x[58], x[57]};
+      let b59 = { x[60], x[59], x[58]};
+      let b60 = { x[61], x[60], x[59]};
+      let b61 = { x[62], x[61], x[60]};
+      let b62 = { x[63], x[62], x[61]};
+      let b63 = { x[64], x[63], x[62]};
+      let b64 = { x[65], x[64], x[63]};
+      let b65 = { x[66], x[65], x[64]};
+      let b66 = { x[67], x[66], x[65]};
+      let b67 = { x[68], x[67], x[66]};
+      let b68 = { x[69], x[68], x[67]};
+      let b69 = { x[70], x[69], x[68]};
+      let b70 = { x[71], x[70], x[69]};
+      let b71 = { 1'b0,  x[71], x[70]};
+      x <= {r30[b71], r30[b70], r30[b69], r30[b68], r30[b67], r30[b66], r30[b65], r30[b64], 
+            r30[b63], r30[b62], r30[b61], r30[b60], r30[b59], r30[b58], r30[b57], r30[b56], 
+            r30[b55], r30[b54], r30[b53], r30[b52], r30[b51], r30[b50], r30[b49], r30[b48], 
+            r30[b47], r30[b46], r30[b45], r30[b44], r30[b43], r30[b42], r30[b41], r30[b40], 
+            r30[b39], r30[b38], r30[b37], r30[b36], r30[b35], r30[b34], r30[b33], r30[b32], 
+            r30[b31], r30[b30], r30[b29], r30[b28], r30[b27], r30[b26], r30[b25], r30[b24], 
+            r30[b23], r30[b22], r30[b21], r30[b20], r30[b19], r30[b18], r30[b17], r30[b16], 
+            r30[b15], r30[b14], r30[b13], r30[b12], r30[b11], r30[b10], r30[b9],  r30[b8], 
+            r30[b7],  r30[b6],  r30[b5],  r30[b4],  r30[b3],  r30[b2],  r30[b1],  r30[b0]};
       step_complete <= True;
    endrule
 
    method Action start(Bit#(8) a) if (!busy_flag);
-      x <= {x[39:24], a, x[15:0]};
+      x <= {x[71:40], a, x[31:0]};
       busy_flag <= True;
       step_complete <= False;
    endmethod
 
    method ActionValue#(Bit#(8)) getResult if (busy_flag && step_complete);
       busy_flag <= False;
-      return x[23:16];
+      return x[39:32];
    endmethod
 endmodule
