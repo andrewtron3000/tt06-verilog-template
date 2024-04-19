@@ -40,7 +40,7 @@ module mkRule30(Rule30_Ifc);
    endrule
 
    method Action start(Bit#(8) a) if (!busy_flag);
-      x <= {8'b0, a, 8'b0};
+      x <= {x[23:16], a, x[7:0]};
       busy_flag <= True;
       step_complete <= False;
    endmethod

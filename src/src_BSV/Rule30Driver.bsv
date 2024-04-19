@@ -35,7 +35,7 @@ module mkRule30Driver (Rule30Driver_Ifc);
 
    /* Assuming a 50MHz clock, divisor for 115200 is 434 / 16 = 27 */
    UART#(3) uart <- mkUART(8, NONE, STOP_1, 27);
-      Rule30_Ifc rule30 <- mkRule30();
+   Rule30_Ifc rule30 <- mkRule30();
 
    Stmt xmas_stmt = ( seq while (op_mode == CHRISTMAS_SURPRISE)
                         seq
