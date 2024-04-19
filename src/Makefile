@@ -1,5 +1,5 @@
 V_DIRS = -vdir verilog_dir -bdir build_v -info-dir build_v
-BSC_COMP_FLAGS = -elab -keep-fires -aggressive-conditions -no-warn-action-shadowing
+BSC_COMP_FLAGS = -elab -keep-fires -aggressive-conditions -no-warn-action-shadowing -remove-unused-modules -verilog-filter ./verilog_filter.py
 BSC_PATHS = -p src_BSV:%/Libraries:%/../../../bsc-contrib/Libraries/FPGA/Misc
 
 TOPMODULE ?= mkRule30Driver
