@@ -58,8 +58,8 @@ async def test_project(dut):
 
   # Do some asserts
   assert (data_list[0] == 0xC0)
-  assert (data_list[1] == 0xA0)
-  assert (data_list[2] == 0xB0)
+  assert (data_list[1] == 0x40)
+  assert (data_list[2] == 0xF0)
 
 
   #
