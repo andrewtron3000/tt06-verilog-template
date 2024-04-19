@@ -5,7 +5,7 @@ endinterface
 
 (* synthesize *)
 module mkRule30(Rule30_Ifc);
-   Reg#(Bit#(24)) x <- mkReg(0);
+   Reg#(Bit#(40)) x <- mkReg(0);
    Reg#(Bit#(8)) r30 <- mkReg(8'd30);
    Reg#(Bool) busy_flag <- mkReg(False);
    Reg#(Bool) step_complete <- mkReg(False);
@@ -34,19 +34,35 @@ module mkRule30(Rule30_Ifc);
       let b20 = { x[21], x[20], x[19]};
       let b21 = { x[22], x[21], x[20]};
       let b22 = { x[23], x[22], x[21]};
-      let b23 = { 1'b0,  x[23], x[22]};
-      x <= {r30[b23], r30[b22], r30[b21], r30[b20], r30[b19], r30[b18], r30[b17], r30[b16], r30[b15], r30[b14], r30[b13], r30[b12], r30[b11], r30[b10], r30[b9], r30[b8], r30[b7], r30[b6], r30[b5], r30[b4], r30[b3], r30[b2], r30[b1], r30[b0]};
+      let b23 = { x[24], x[23], x[22]};
+      let b24 = { x[25], x[24], x[23]};
+      let b25 = { x[26], x[25], x[24]};
+      let b26 = { x[27], x[26], x[25]};
+      let b27 = { x[28], x[27], x[26]};
+      let b28 = { x[29], x[28], x[27]};
+      let b29 = { x[30], x[29], x[28]};
+      let b30 = { x[31], x[30], x[29]};
+      let b31 = { x[32], x[31], x[30]};
+      let b32 = { x[33], x[32], x[31]};
+      let b33 = { x[34], x[33], x[32]};
+      let b34 = { x[35], x[34], x[33]};
+      let b35 = { x[36], x[35], x[34]};
+      let b36 = { x[37], x[36], x[35]};
+      let b37 = { x[38], x[37], x[36]};
+      let b38 = { x[39], x[38], x[37]};
+      let b39 = { 1'b0,  x[39], x[38]};
+      x <= {r30[b39], r30[b38], r30[b37], r30[b36], r30[b35], r30[b34], r30[b33], r30[b32], r30[b31], r30[b30], r30[b29], r30[b28], r30[b27], r30[b26], r30[b25], r30[b24], r30[b23], r30[b22], r30[b21], r30[b20], r30[b19], r30[b18], r30[b17], r30[b16], r30[b15], r30[b14], r30[b13], r30[b12], r30[b11], r30[b10], r30[b9], r30[b8], r30[b7], r30[b6], r30[b5], r30[b4], r30[b3], r30[b2], r30[b1], r30[b0]};
       step_complete <= True;
    endrule
 
    method Action start(Bit#(8) a) if (!busy_flag);
-      x <= {x[23:16], a, x[7:0]};
+      x <= {x[39:24], a, x[15:0]};
       busy_flag <= True;
       step_complete <= False;
    endmethod
 
    method ActionValue#(Bit#(8)) getResult if (busy_flag && step_complete);
       busy_flag <= False;
-      return x[15:8];
+      return x[23:16];
    endmethod
 endmodule
